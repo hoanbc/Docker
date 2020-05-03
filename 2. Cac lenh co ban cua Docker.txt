@@ -1,0 +1,40 @@
+- Tạo image để triển khai cho máy khác
+docker commit -m "Comment" -a "Tác giả"  [Container ID] [Image Name]
+docker commit -m "Centos Project01" -a "HoanBC" d452f1a1b69d hoanbc/project01:v1
+
+- Đăng nhập vào docker/hub
+docker login
+
+- Đưa image lên docker hup để mọi người cùng sử dụng
+docker push [Tên image]
+docker push hoanbc/project01:v1
+ 
+- Check các container đang chạy
+sudo docker ps -a
+
+- Xem trạng thái container
+docker container ls -a
+
+- Xóa containner
+sudo docker rm [Container ID]
+
+- Stop container
+docker container stop [Container ID]
+
+- Restart container
+docker container restart [Container ID]
+
+- Pause container
+docker container pause  [Container ID]
+
+- Truy cập vào các container đang chạy
+docker container attach [Container ID]
+
+- Lệnh stop toàn bộ container
+docker stop $(docker ps -a -q)
+
+- Lệnh xóa toàn bộ container
+docker rm $(docker ps -a -q)
+
+- Lệnh xóa toàn bộ image
+docker rmi -f $(docker images -a -q)
