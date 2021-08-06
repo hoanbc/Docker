@@ -1,40 +1,24 @@
-- Tạo image để triển khai cho máy khác
+### Tạo image để triển khai cho máy khác
 docker commit -m "Comment" -a "Tác giả"  [Container ID] [Image Name]
 docker commit -m "Centos Project01" -a "HoanBC" d452f1a1b69d hoanbc/project01:v1
 
-- Đăng nhập vào docker/hub
-docker login
+### Cho phép truy cập và điều khiển Docker Node từ xa
+vim /lib/systemd/system/docker.service
+From: ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+Change To: ExecStart=/usr/bin/dockerd -H fd:// -H=tcp://0.0.0.0:2375 --containerd=/run/containerd/containerd.sock
 
-- Đưa image lên docker hup để mọi người cùng sử dụng
+### Đăng nhập vào docker/hub
+docker login -u username -p password
+docker login -u hoanbc -p devops123
+
+### Đưa image lên docker hub để mọi người cùng sử dụng
 docker push [Tên image]
 docker push hoanbc/project01:v1
- 
-- Check các container đang chạy
-sudo docker ps -a
 
-- Xem trạng thái container
-docker container ls -a
+### Kiểm tra phiên bản và các thông số của Docker
+docker -v
+docker system info
+docker-compose version
 
-- Xóa containner
-sudo docker rm [Container ID]
 
-- Stop container
-docker container stop [Container ID]
 
-- Restart container
-docker container restart [Container ID]
-
-- Pause container
-docker container pause  [Container ID]
-
-- Truy cập vào các container đang chạy
-docker container attach [Container ID]
-
-- Lệnh stop toàn bộ container
-docker stop $(docker ps -a -q)
-
-- Lệnh xóa toàn bộ container
-docker rm $(docker ps -a -q)
-
-- Lệnh xóa toàn bộ image
-docker rmi -f $(docker images -a -q)
