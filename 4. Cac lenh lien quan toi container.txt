@@ -4,8 +4,8 @@
 docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
 docker container run [OPTIONS] IMAGE [COMMAND] [ARG...]
 
-Ví dụ: docker run -dit --name container-nginx -p 8080:80 -v /data/docker/nginx:/usr/share/nginx/html --memory 2048m --cpus 1.5 --cpuset-cpus 0-1 --restart unless-stopped  nginx
-Trong đó:
+Ví dụ: docker run -dit --name container-nginx -p 8080:80 -v /data/docker/nginx:/usr/share/nginx/html --memory 2048m --cpus 1.5 --cpuset-cpus 0-1 --restart unless-stopped --network front-end --env WHOAMI=hoanbc nginx
+Note:
 -d : Chạy container ở chế độ nền
 -i : Giữ session ngay cả khi không thực hiện attach
 -t : Tạo TTY giả
@@ -16,6 +16,8 @@ Trong đó:
 --cpus 1.5 : Giới hạn dung lượng GHz cho container
 --cpuset-cpus 0-1 : Giới hạn vị trí Core sẽ sử dụng cho container
 --restart unless-stopped : Khởi động lại nếu container không ở trạng thái RUNNING
+--network front-end : Kết nối vào mạng docker
+--env WHOAMI=hoanbc : Thêm biến vào trong docker
 nginx : Image sẽ sử dụng để khởi tạo container
 
 --- Xóa containner
@@ -64,6 +66,17 @@ docker exec -it 2e76840fc1c6 /bin/bash
 docker container exec -it root_worker_1 /bin/bash
 Note: Để thoát khỏi chế độ exec mà không khiến container bị kill. Sử dụng Ctrl + D
 
+--- Kiểm tra các thông số của container
+docker inspect [OPTIONS] NAME|ID [NAME|ID...]
+docker container inspect [OPTIONS] NAME|ID [NAME|ID...]
+docker inspect 2e76840fc1c6
+docker container inspect root_worker_1
+
+--- Xem log của container
+docker logs [OPTIONS] CONTAINER
+docker container logs [OPTIONS] CONTAINER
+docker logs -f 2e76840fc1c6
+docker container -f logs root_worker_1
 
 --- Kiểm tra danh sách các container
 docker ps -a
