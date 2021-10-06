@@ -32,6 +32,13 @@ docker node demote manager-1
 docker node rm [OPTIONS] NODE [NODE...]
 docker node rm -f manager-1
 
+--- Ngắt tạm thời node ra khỏi cluster swarm
+docker node update [OPTIONS] NODE
+docker node update --drain active manager-1
+--- Tham gia lại node đã ngắt ra khỏi cluster swarm
+docker node update --availability active manager-1
+
+
 --- Liệt kê các node trong cluster
 docker node ls
 
