@@ -1,8 +1,11 @@
 1) Cài đặt yum-utils
 dnf install -y yum-utils
+sudo subscription-manager repos --enable=rhel-7-server-rpms \
+  --enable=rhel-7-server-extras-rpms \
+  --enable=rhel-7-server-optional-rpms
 
 2) Tải Repo của Docker
-yum-config-manager --add-repo https://download.docker.com/linux/centos/do
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
 3) Cài đặt Docker
 dnf install docker-ce docker-ce-cli containerd.io
