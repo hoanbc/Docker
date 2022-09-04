@@ -1,0 +1,36 @@
+Hướng dẫn xóa logs docker, giới hạn file log docker
+By Phạm Xuân Ngọc
+1. XÓA LOG CỦA DOCKER
+Nếu bạn cài docker, sau một thời gian sẽ thấy ổ cứng rất nhanh bị đầy (nhất là các server chạy nhiều docker container và ghi log liên tục). Trong khi kiểm tra thì docker images và docker container ko chiếm mấy dung lượng.
+Nếu kiểm tra kỹ thì sẽ thấy dung lượng của 2 folder sau rất lớn:
+./var/lib/docker/containers
+./var/lib/docker
+Mặc định docker lưu log trong folder /var/lib/docker/containers, và mặc định thì log sẽ ko bị giới hạn kích thước nên sẽ tăng dần theo thời gian.
+Để xóa log, ta dùng câu lệnh sau:
+sudo sh -c 'truncate -s 0 /var/lib/docker/containers/*/*-json.log'
+2. GIỚI HẠN KÍCH THƯỚC FILE LOGS CỦA DOCKER
+Cách thứ nhất:
+Giới hạn logs của từng docker container khi run với lựa chọn --log-driver, --log-opt để quyết định bao nhiêu file log được ghi ra, kích thước mỗi file là bao nhiêu…
+Ví dụ:
+docker run --log-driver json-file --log-opt max-size=10m --log-opt max-file=3
+Hoặc nếu sử dụng docker compose:
+version: '3.7'
+services:
+ app:
+ image: ...
+ logging:
+ options:
+ max-size: "10m"
+ max-file: "3"
+Cách thứ hai:
+Thiết lập logrotate để xóa log định kì bằng cách:
+Sửa file /etc/logrotate.d/docker-logs (nếu chưa có thì tạo mới) với nội dung sau:
+/var/lib/docker/containers/*/*.log {
+ rotate 7
+ daily
+ compress
+ size=50M
+ missingok
+ delaycompress
+ copytruncate
+}
