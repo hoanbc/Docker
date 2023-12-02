@@ -1,0 +1,11 @@
+services:
+  lb:
+    build: .
+    container_name: nginx
+    restart: always
+    user: nginx:nginx
+    ports:
+      - "443:8080"
+    volumes:
+      - ./logs:/tmp/logs
+      - /etc/localtime:/etc/localtime:ro
