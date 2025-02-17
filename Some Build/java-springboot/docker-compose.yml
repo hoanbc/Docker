@@ -1,0 +1,20 @@
+services:
+  minio:
+    image: docker.io/openjdk:25-jdk
+    container_name: openjdk25
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 2G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    environment:
+      JAVA_TOOL_OPTIONS: "-XX:MinRAMPercentage=10 -XX:InitialRAMPercentage=20 -XX:MaxRAMPercentage=75"
+    command: java -jar /opt/app/spring-boot.jar
+    #command: sleep infinity
+    volumes:
+      - ./app:/opt/app
+    ports:
+      - 8080:8080
