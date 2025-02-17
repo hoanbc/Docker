@@ -1,3 +1,6 @@
+![image](https://github.com/user-attachments/assets/3958dacf-8b03-4907-a2f9-ca880aad0869)
+<br>(heap size = 1/4 memory limit)
+
 ```yml
 Các tham số này được sử dụng trong Java để điều chỉnh việc phân bổ bộ nhớ heap (bộ nhớ dùng cho ứng dụng Java) cho JVM (Java Virtual Machine). Cụ thể:
 
@@ -18,5 +21,6 @@ MinRAMPercentage đặt một mức tối thiểu cho bộ nhớ heap mà JVM s�
 InitialRAMPercentage xác định lượng bộ nhớ heap mà JVM sẽ bắt đầu sử dụng.
 MaxRAMPercentage đặt một giới hạn tối đa cho bộ nhớ heap mà JVM có thể sử dụng.
 
-Check: java -XX:+PrintFlagsFinal -version | grep -Ei 'MaxHeapSize|MaxRAMFraction|version'
+Check1: java -XX:+PrintFlagsFinal -version | grep -Ei 'MaxHeapSize|MaxRAMFraction|version'
+Check2: java -XX:+PrintFlagsFinal -version | grep HeapSize
 ```
