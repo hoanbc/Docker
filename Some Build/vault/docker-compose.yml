@@ -1,0 +1,29 @@
+services:
+  vault:
+    image: hashicorp/vault
+    container_name: vault
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      VAULT_ADDR: "https://vault.devops.id.vn:8200"
+      VAULT_API_ADDR: "https://vault.devops.id.vn:8200"
+      VAULT_ADDRESS: "https://vault.devops.id.vn:8200"
+      VAULT_UI: true
+      # VAULT_TOKEN:
+    ports:
+      - "8200:8200"
+      - "8201:8201"
+    volumes:
+      - ./logs:/vault/logs/:rw
+      - ./data:/vault/data/:rw
+      - ./config:/vault/config/:rw
+      - ./certs:/certs/:rw
+      - ./file:/vault/file/:rw
+    cap_add:
+      - IPC_LOCK
+    entrypoint: vault server -config /vault/config/config.hcl
+    extra_hosts:
+      - "s3.devops.id.vn:10.200.12.233"
+      - "minio02.devops.id.vn:10.200.12.237"
+      - "minio03.devops.id.vn:10.200.12.238"
+      - "vault.devops.id.vn:10.200.12.238"

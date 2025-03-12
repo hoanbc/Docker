@@ -1,0 +1,15 @@
+services:
+  squid:
+    image: ubuntu/squid:latest
+    container_name: squid
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      TZ: "Asia/Ho_Chi_Minh"
+    ports:
+      - "3128:3128"
+    volumes:
+      - ./squid/log:/var/log/squid/
+      - ./squid/config/:/etc/squid/
+    extra_hosts:
+      - "squid.devops.id.vn:10.200.12.238"

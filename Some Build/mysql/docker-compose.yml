@@ -1,0 +1,16 @@
+services:
+  mysql:
+    image: mysql:8.0.36
+    container_name: mysql
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: MyR00tMySQLPa$$5w0rD
+      MYSQL_DATABASE: game_scores
+      MYSQL_USER: game_scores_username
+      MYSQL_PASSWORD: game_scores_password
+    volumes:
+      - ./mysql:/var/lib/mysql
+    extra_hosts:
+      - "s3.devops.id.vn:10.200.12.233"
+      - "vault.devops.id.vn:10.200.12.238"

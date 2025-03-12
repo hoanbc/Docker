@@ -1,0 +1,13 @@
+services:
+  softhsm:
+    build: .
+    image: softhsm2:v1
+    container_name: softhsm
+    restart: always
+    environment:
+      SOFTHSM2_CONF: /etc/softhsm2.conf
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./softhsm/config/softhsm2.conf:/etc/softhsm2.conf
+      - ./softhsm/tokens:/var/lib/softhsm/tokens
+
